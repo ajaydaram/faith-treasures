@@ -1,0 +1,26 @@
+---
+layout: default
+title: Topics
+---
+
+<section class="py-5 text-center">
+  <h1>Topics We Cover</h1>
+  <p class="lead">Explore various categories that focus on key areas of theology and practical ministry.</p>
+</section>
+
+
+
+<section class="row g-4">
+  {% assign topics = "Biblical Languages,Systematic Theology,Biblical Ethics,Preaching,Pastoral Theology,Church Missions,Devotions,Evangelism" | split: ',' %}
+  {% for topic in topics %}
+    <div class="col-md-4">
+      <div class="card text-center h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ topic }}</h5>
+          <p class="card-text">Learn more about {{ topic }} to deepen your knowledge and walk in faith.</p>
+          <a href="/categories/{{ topic | slugify }}.html" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</section>
