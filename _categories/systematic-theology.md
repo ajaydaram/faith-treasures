@@ -6,6 +6,11 @@ category: Systematic Theology
 
 # Systematic Theology
 
+{% for post in site.categories['Systematic Theology'] %}
+  <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+  <p>{{ post.excerpt }}</p>
+{% endfor %}
+
 Systematic theology is a discipline of Christian theology that formulates an orderly, rational, and coherent account of the doctrines of the Christian faith. It addresses theological topics one by one (e.g., God, humanity, salvation) and attempts to summarize all the biblical teaching on each particular subject.
 
 ## Key Topics

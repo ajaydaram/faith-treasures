@@ -23,7 +23,7 @@ email: your_email@example.com
 description: >-
   Exploring God’s Word, growing in grace, and equipping believers for ministry.
 baseurl: "" # Leave as is if you're not using a subfolder for the site
-url: "https://yourdomain.com" # Your live site URL (replace this with your URL once deployed)
+url: "https://faithtreasure.netlify.app/" # Your live site URL (replace this with your URL once deployed)
 theme: minima
 markdown: kramdown
 paginate: 5
@@ -31,6 +31,8 @@ collections:
   categories:
     output: true
 
+plugins:
+  - jekyll-feed
 
 # Exclude from processing.
 # The following items will not be processed, by default.
