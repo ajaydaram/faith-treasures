@@ -1,4 +1,3 @@
-// filepath: /c:/Users/USER/my-website/fetch_notion_posts.js
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
@@ -21,14 +20,14 @@ async function fetchNotionPosts() {
 
     // Print the raw data to see the response from Notion
     console.log("Raw data from Notion:");
-    console.log(data);
+    console.log(JSON.stringify(data, null, 2));
 
     data.results.forEach(result => {
-      const title = result.properties.Title.title[0].text.content;
-      const category = result.properties.Category.select.name;
-      const content = result.properties.Content.rich_text[0].text.content;
-      const slug = result.properties.Slug.rich_text[0].text.content;
-      const date = result.properties.Date.date.start;
+      const title = result.properties.Title?.rich_text[0]?.text?.content || 'Untitled';
+      const category = result.properties.Category?.rich_text[0]?.text?.content || 'Uncategorized';
+      const content = result.properties.Content?.rich_text[0]?.text?.content || '';
+      const slug = result.properties.Slug?.rich_text[0]?.text?.content || title.toLowerCase().replace(/ /g, '-');
+      const date = result.properties.Date?.date?.start || new Date().toISOString().split('T')[0];
 
       // Print each post's details to verify the fetched data
       console.log(`Title: ${title}`);
@@ -39,3 +38,25 @@ async function fetchNotionPosts() {
       console.log("-----");
 
       const mdContent = `---
+layout: post
+title: "${title}"
+date: ${date}
+category: ${category}
+slug: ${slug}
+---
+
+${content}
+`;
+      const categoryFolder = path.join(__dirname, `_posts`, category.toLowerCase().replace(/ /g, '-'));
+      if (!fs.existsSync(categoryFolder)) {
+        fs.mkdirSync(categoryFolder, { recursive: true });
+      }
+      const filename = path.join(categoryFolder, `${date}-${slug}.md`);
+      fs.writeFileSync(filename, mdContent);
+    });
+  } catch (error) {
+    console.error('Error fetching data from Notion:', error);
+  }
+}
+
+fetchNotionPosts();

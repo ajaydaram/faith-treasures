@@ -1,3 +1,4 @@
+<!-- filepath: /c:/Users/USER/my-website/categories/systematic-theology.md -->
 ---
 layout: category
 title: Systematic Theology
