@@ -23,10 +23,11 @@ async function fetchNotionPosts() {
     console.log(JSON.stringify(data, null, 2));
 
     data.results.forEach(result => {
-      const title = result.properties.Title?.rich_text[0]?.text?.content || 'Untitled';
-      const category = result.properties.Category?.rich_text[0]?.text?.content || 'Uncategorized';
-      const content = result.properties.Content?.rich_text[0]?.text?.content || '';
-      const slug = result.properties.Slug?.rich_text[0]?.text?.content || title.toLowerCase().replace(/ /g, '-');
+      const title = result.properties.Title?.title?.[0]?.text?.content || 'Untitled';
+      const category = result.properties.Category?.rich_text?.[0]?.text?.content || 'Uncategorized';
+      const contentArray = result.properties.Content?.rich_text || [];
+      const content = contentArray.map(item => item.text.content).join('\n') || '';
+      const slug = result.properties.Slug?.rich_text?.[0]?.text?.content || title.toLowerCase().replace(/ /g, '-');
       const date = result.properties.Date?.date?.start || new Date().toISOString().split('T')[0];
 
       // Print each post's details to verify the fetched data
